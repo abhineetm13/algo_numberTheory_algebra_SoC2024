@@ -1,5 +1,5 @@
 import random
-from typing import Self
+# from typing import Self
 
 def pair_gcd(a: int, b: int)->int:
     """Returns the gcd of two integers.
@@ -59,7 +59,7 @@ def pair_egcd(a: int, b: int)->tuple[int, int, int]:
     The extended euclidean algorithm is implemented in this function.
 
     """
-    value: int = pair_egcd_recursive(a, b)
+    value: tuple[int, int, int, int] = pair_egcd_recursive(a, b)
     return (value[2], value[3], a*value[2]+b*value[3])
 
 
@@ -157,7 +157,7 @@ def mod_inv(a: int, n: int)->int:
     elif n == 1:
         return 0
     else:
-        value: int = pair_egcd(a, n)
+        value: tuple[int, int, int] = pair_egcd(a, n)
         return value[0]%n
             
 # print(mod_inv(549, 50))
@@ -436,7 +436,7 @@ class QuotientPolynomialRing:
         return 0
 
     @staticmethod
-    def Mod_gen(p: list[int], gen: list[int])->Self:
+    def Mod_gen(p: list[int], gen: list[int])->"QuotientPolynomialRing":
         while len(p) >= len(gen):
             order_diff = len(p)-len(gen)
             for i in range(len(p)-order_diff):
@@ -445,7 +445,7 @@ class QuotientPolynomialRing:
         return QuotientPolynomialRing(p, gen)
 
     @staticmethod
-    def Add(poly1: Self, poly2: Self)->Self:
+    def Add(poly1: "QuotientPolynomialRing", poly2: "QuotientPolynomialRing")->"QuotientPolynomialRing":
         if poly1.pi_generator != poly2.pi_generator:
             raise ValueError('Different pi_generators')
         
@@ -468,7 +468,7 @@ class QuotientPolynomialRing:
         return sum
     
     @staticmethod
-    def Sub(poly1: Self, poly2: Self)->Self:
+    def Sub(poly1: "QuotientPolynomialRing", poly2: "QuotientPolynomialRing")->"QuotientPolynomialRing":
         if poly1.pi_generator != poly2.pi_generator:
             raise ValueError('Different pi_generators')
         
@@ -498,7 +498,7 @@ class QuotientPolynomialRing:
         return diff
     
     @staticmethod
-    def Mul(poly1: Self, poly2: Self)->Self:
+    def Mul(poly1: "QuotientPolynomialRing", poly2: "QuotientPolynomialRing")->"QuotientPolynomialRing":
         if poly1.pi_generator != poly2.pi_generator:
             raise ValueError('Different pi_generators')
         deg = 2*(len(poly1.element)-1)
@@ -546,7 +546,7 @@ class QuotientPolynomialRing:
         return p
 
     @staticmethod
-    def GCD(poly1: Self, poly2: Self)->Self:
+    def GCD(poly1: "QuotientPolynomialRing", poly2: "QuotientPolynomialRing")->"QuotientPolynomialRing":
         if poly1.pi_generator != poly2.pi_generator:
             raise ValueError("Different pi_generators")
         a = QuotientPolynomialRing.Common_factor(poly1.element)
@@ -620,7 +620,7 @@ class QuotientPolynomialRing:
 
 # """
     @staticmethod
-    def Inv(poly: Self)->Self:
+    def Inv(poly: "QuotientPolynomialRing")->"QuotientPolynomialRing":
         a = poly.element
         r = QuotientPolynomialRing.Deg(a)
         c = poly.pi_generator
@@ -825,7 +825,7 @@ def aks_test(n: int)->bool:
     if pair_gcd(n, r)>1: return False
     # print(r)
     for j in range(1, 2*len(bin(n)[2:])*floor_sqrt(r)+1):
-        print(j)
+        # print(j)
         if aks_satisfied(j, r, n): return False
 
     return True
