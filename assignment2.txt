@@ -1,0 +1,40 @@
+Assignment 2:
+
+Deadline: 7th July 2014, 23:59 IST
+
+Feel free to use functions from the previous assignment in this assignment! Also, you are allowed to use import random at the beginning of your script!
+Implement the following functions:
+
+1. floor_sqrt(x: int) -> int : Returns the floor of the square root of x; assume x > 0 [Hint: Exercise 3.29]
+
+2. is_perfect_power(x: int) -> bool : Returns if x is a perfect power; assume x > 1 [Hint: Exercise 3.31]
+
+3. is_prime(n: int) -> bool : Use the Miller-Rabin test to return true if n is (probably) prime or false if it is composite; assume n > 1. Choose a good set of bases.
+
+4. gen_prime(m : int) -> int : Generate a random prime number p such that 2 <= p <= m; assume m > 2
+
+5. gen_k_bit_prime(k: int) -> int : Generate a random k-bit prime number, that is, a prime number p such that 2^(k-1) <= p < 2^k; assume k >= 1
+
+6. factor(n: int) -> list[tuple[int, int]] : Returns the prime factorisation of n; assume n >= 1. This should return a list of tuple, where the first component of the tuples are the prime factors, and the second component of the tuple is the respective power to which the corresponding factor is raised in the prime factorisation. (What do you think the output should be if n = 1? Think about it before I release the test cases)
+
+7. euler_phi(n: int) -> int : Returns the Euler phi function of n.
+
+Implement a class QuotientPolynomialRing. This class would represents elements in a univariate polynomial ring over the integers modulo some specified monic polynomial in the same ring. Polynomials would be represented using a list of ints, where the i^th index represents the coefficient of X^i. The length of the list would be the degree d of the quotienting polynomial. For instance, if the quotienting polynomial is X^4 + 5, and we want to represent 6X^2 + 7X + 3, it would be represented as [3, 7, 6, 0] Implement the following in the class:
+
+8. An instance variable called pi_generator which would be the the "quotienting polynomial", and an instance variable called element to represent the element of the ring.
+
+9. __init__(self, poly: list[int], pi_gen: list[int]) -> None : This initialises the object as required. Return an exception if pi_gen is empty or not monic.
+
+10. A static method Add(poly1: QuotientPolynomialRing, poly2: QuotientPolynomialRing) -> QuotientPolynomialRing  which adds two polynomials modulo pi_generator. Raise an exception if the two arguments have different pi_generators.
+
+11. A static method Sub(poly1: QuotientPolynomialRing, poly2: QuotientPolynomialRing) -> QuotientPolynomialRing  which subtracts two polynomials modulo pi_generator. Raise an exception if the two arguments have different pi_generators.
+
+12. A static method Mul(poly1: QuotientPolynomialRing, poly2: QuotientPolynomialRing) -> QuotientPolynomialRing  which multiplies two polynomials modulo pi_generator. Raise an exception if the two arguments have different pi_generators.
+
+13. A static method GCD(poly1: QuotientPolynomialRing, poly2: QuotientPolynomialRing) -> QuotientPolynomialRing which returns the GCD of two polynomials modulo pi_generator. Raise an exception if the two arguments have different pi_generators.
+
+14. A static method Inv(poly: QuotientPolynomialRing) -> QuotientPolynomialRing which returns the modular inverse of a polynomial modulo pi_generator. Raise an exception if the polynomial is not invertible in the ring.
+
+Finally, implement the following function:
+
+15. aks_test(n: int) -> bool : Use the AKS deterministic primality testing to return true if n is prime or false if it is composite; assume n > 1.
