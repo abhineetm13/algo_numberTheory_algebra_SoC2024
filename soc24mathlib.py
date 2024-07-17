@@ -319,9 +319,7 @@ def is_in_miller_rabin_set(n: int, a: int)->bool:
 
 
 def is_prime(n: int)->bool:
-    k = 0
-    if 100 < n: k = 100
-    else: k = n-1
+    k = 100
 
     for i in range(0, k):
         a = random.randint(1, n-1)
@@ -836,3 +834,112 @@ def aks_test(n: int)->bool:
 # print(factor(123467))
 # print(find_factor_pollard_rho(4, 2, 1))
 # print(is_prime(3698849471))
+
+
+def get_generator(p: int)->int:
+    factorisation = factor(p-1)
+    r = len(factorisation)
+    c = 1
+    for i in range(0, r):
+        b = 1
+        a = 0
+        while b == 1:
+            a = random.randint(1, p-1)
+            b = pow(a, (p-1)//factorisation[i][0], p)
+            # print(b, end = " ")
+        # print(a)
+        c *= pow(a, (p-1)//pow(factorisation[i][0], factorisation[i][1]), p)
+        c %= p
+    return c
+
+
+def discrete_log(x: int, g: int, p: int)->int:
+    q = p-1
+    m = floor_sqrt(q)
+    values = {}
+    value = 1
+    for i in range(m+1):
+        values[value] = i
+        value *= g
+        value %= p
+    # print(values)
+    value = x
+    mul = pow(g, q-m, p)
+    # print(mul)
+    for i in range(m+1):
+        # print(value)
+        if value in values:
+            floor = values[value]
+            return (floor + i*m)%q
+        value *= mul
+        value %= p
+
+    raise ValueError("Discrete logarithm does not exist.")
+
+
+def legendre_symbol(a: int, p: int)->int:
+    if a%p == 0: return 0
+    if p == 2: return 1
+    if pow(a, (p-1)//2, p) == 1: return 1
+    else: return -1
+
+
+def jacobi_symbol(a: int, n: int)->int:
+    if pair_gcd(a, n) != 1: return 0
+    j = 1
+    factors = factor(n)
+    # print(factors)
+    for q, i in factors:
+        # print(legendre_symbol(a, q))
+        j *= pow(legendre_symbol(a, q), i)
+    return j
+
+
+def modular_sqrt_prime(x: int, p: int)->int:
+    if is_quadratic_residue_prime(x, p) != 1:
+        raise ValueError("Modular square root does not exist")
+    if p == 2: return 1
+    if p%4 == 3: 
+        p1 = pow(x, (p+1)//4, p)
+        if p1 > p-p1: return p-p1
+        else: return p1
+
+    c = 2
+    while is_quadratic_residue_prime(c,p) != -1: c = random.randint(2, p-1)
+
+    h = 0
+    m = p-1
+    while m%2 == 0:
+        m = m//2
+        h += 1
+    c = pow(c, m, p)
+    x1 = pow(x, m, p)
+    a = discrete_log(x1, c, p)
+    
+    p1 = (pow(c, a//2, p)*pow(x, -(m//2), p))%p
+    if p1 < p-p1: return p1
+    else: return p-p1
+
+
+def modular_sqrt_prime_power(x: int, p: int, e: int)->int: # assuming odd prime
+    if is_quadratic_residue_prime_power(x, p, e) != 1:
+        raise ValueError("Modular square root does not exist")
+    
+    b = modular_sqrt_prime(x, p)
+    for i in range(1, e):
+        a1 = mod_inv(2*b, p)
+        b1 = (x-b*b)//pow(p, i)
+        h = (a1*b1)%p
+        b = (b + h*pow(p, i))%pow(p, i+1)
+    p1 = b
+    if p1 > pow(p, e)-p1: return pow(p, e)-p1
+    else: return p1
+
+
+def is_smooth(m: int, y: int)->bool:
+    for i in range(2, y+1)  :
+        if m%i == 0:
+            while m%i == 0:
+                m = m//i
+        if m <= y: return True
+    return False
