@@ -922,6 +922,7 @@ def modular_sqrt_prime(x: int, p: int)->int:
 
 
 def modular_sqrt_prime_power(x: int, p: int, e: int)->int: # assuming odd prime
+    if x%pow(p, e) == 0: return 0
     if is_quadratic_residue_prime_power(x, p, e) != 1:
         raise ValueError("Modular square root does not exist")
     
@@ -934,6 +935,74 @@ def modular_sqrt_prime_power(x: int, p: int, e: int)->int: # assuming odd prime
     p1 = b
     if p1 > pow(p, e)-p1: return pow(p, e)-p1
     else: return p1
+
+
+def modular_sqrt_2_pow(x: int, e: int)->list[int]:
+    sqrts = []
+    num = pow(2, e)
+    if x%2 == 0:
+        for r in range(0, num, 2):
+            if (r*r-x)%num == 0: sqrts.append(r)
+        if len(sqrts) == 0: raise ValueError("Modular square root does not exist")
+    else:
+        for r in range(1, num, 2):
+            if (r*r-x)%num == 0: sqrts.append(r)
+        if len(sqrts) == 0: raise ValueError("Modular square root does not exist")
+    return sqrts
+
+# print(modular_sqrt_2_pow(68, 7))
+
+
+def modular_sqrt(x: int, z: int)->int:
+    y = z
+    pow_2 = 0
+    if y%2 == 0:
+        pow_2+=1
+        y = y//2
+
+    factors = factor(y)
+    sq_roots = []
+
+    for prime, power in factors:
+        sq_roots.append(modular_sqrt_prime_power(x%pow(prime, power), prime, power))
+
+    if pow_2 != 0:
+        factors.append((2, pow_2))
+        sqrts_2 = modular_sqrt_2_pow(x, pow_2)
+        # print(sqrts_2)
+
+    n = [pow(prime, power) for prime, power in factors]
+    
+    # For listing all possibilities of sq. roots modulo prime-powers
+    if len(sq_roots) != 0:
+        a_possible = [[sq_roots[0]], [-sq_roots[0]]] 
+        for i in range(1, len(sq_roots)):
+            t = len(a_possible)
+            for j in range(t):
+                a1 = a_possible[j][:]
+                a_possible[j].append(sq_roots[i])
+                a1.append(-sq_roots[i])
+                a_possible.append(a1)
+
+        if pow_2 != 0:
+            t = len(a_possible)
+            for i in range(t):
+                a1 = a_possible[i][:]
+                a_possible[i].append(sqrts_2[0])
+                for j in range(1, len(sqrts_2)):
+                    a2 = a1[:]
+                    a2.append(sqrts_2[j])
+                    a_possible.append(a2)
+        # print(a_possible)
+
+        roots = []
+        for a in a_possible:
+            roots.append(crt(a, n)%z)
+        # print(roots)
+        return min(roots)
+
+    else:
+        return min(r%z for r in sqrts_2)
 
 
 def is_smooth(m: int, y: int)->bool:
