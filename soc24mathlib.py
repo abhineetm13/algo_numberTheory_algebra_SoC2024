@@ -1,5 +1,6 @@
 import random
 # from typing import Self
+import fractions
 
 def pair_gcd(a: int, b: int)->int:
     """Returns the gcd of two integers.
@@ -413,6 +414,39 @@ def euler_phi(n: int)->int:
 # print(euler_phi(1111111))
 
 
+def gaussian_elimination(A: list[list[int]])->list[list[fractions.Fraction]]:
+    """
+        A is m*n, each element of A is a row
+        m = no. of rows, n = no. of columns
+        A[i-1] is ith row, A[:][j-1] is jth column
+    """
+    B = [[fractions.Fraction(A[i][j], 1) for j in range(len(A[i]))] 
+                for i in range(len(A))]
+    r = 0
+    m = len(A)
+    n = len(A[0])
+    for j in range(1, n+1):
+        l = 0
+        i = r
+        while l == 0 and i < m:
+            i += 1
+            # print(i)
+            if B[i-1][j-1] != 0: l = i
+        if l != 0:
+            r = r+1
+            swap = B[r-1][:]
+            B[r-1] = B[l-1][:]
+            B[l-1] = swap[:]
+            b = 1/B[r-1][j-1]
+            for iter in range(len(B[r-1])): B[r-1][iter] *= b
+            for i in range(1, m+1):
+                if i != r:
+                    b = B[i-1][j-1]
+                    for iter in range(len(B[i-1])): B[i-1][iter] -= b*B[r-1][iter]            
+
+    return B
+
+
 class QuotientPolynomialRing:
     pi_generator: list[int]
     element: list[int]
@@ -615,8 +649,46 @@ class QuotientPolynomialRing:
         # print(x)
         return QuotientPolynomialRing(x, poly1.pi_generator)
     
+    @staticmethod
+    def Inv(poly: "QuotientPolynomialRing")->"QuotientPolynomialRing":
+        p = poly.element[:]
+        base = poly.pi_generator[:]
+        d1 =QuotientPolynomialRing.Deg(p)
+        d2 = QuotientPolynomialRing.Deg(base)
+        
+        # Creating matrix for solving equations
+        A = []
+        for iter1 in range(d1+d2):
+            # print(1, iter1)
+            Ai = [0 for i in range(d1+d2)]
+            for iter2 in range(d2):
+                # print(2, iter2)
+                if iter1-iter2 > d1: Ai[iter2] = 0
+                elif iter2 <= iter1: Ai[iter2] = p[iter1-iter2]
+            for iter2 in range(d2, d1+d2):
+                if iter1-iter2 > 0: Ai[iter2] = 0
+                elif iter2-d2 <= iter1: Ai[iter2] = -base[iter1+d2-iter2]
+            A.append(Ai)
+        
+        A[0].append(1)
+        for i in range(1, len(A)):
+            A[i].append(0)
+        # print(A)
 
-# """
+        # Solving the equations
+        B = gaussian_elimination(A)
+        # print(B)
+
+        inv = [0 for i in range(d2)]
+        null = [fractions.Fraction(0, 1) for i in range(d1+d2+1)]
+        for iter in range(d1+d2):
+            if B[iter] == null: raise ValueError("Inverse does not exist")
+            if B[iter][d1+d2].denominator != 1: raise ValueError("Inverse does not exist")  
+        for iter in range(d2):
+            inv[iter] = int(B[iter][d1+d2])
+        # print(inv)
+        return QuotientPolynomialRing(inv, base)
+"""
     @staticmethod
     def Inv(poly: "QuotientPolynomialRing")->"QuotientPolynomialRing":
         a = poly.element
@@ -658,7 +730,7 @@ class QuotientPolynomialRing:
 
         return b_poly
         
-# """
+"""
 ############################################################################################
 """
     def Mod(poly1: list[int], poly2: list[int], length)->list[int]:
