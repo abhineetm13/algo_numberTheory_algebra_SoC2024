@@ -235,9 +235,10 @@ def is_quadratic_residue_prime_power(a: int, p: int, e: int)->int:
         e: the power to which p is to be raised. (e>=1)
 
     Returns:
-        1 if a is a quadratic residue modulo p^e.
-        -1 if a is not a quadratic residue modulo p^e.
-        0 if a is not coprime to p^e.
+        int: 
+            1 if a is a quadratic residue modulo p^e.
+            -1 if a is not a quadratic residue modulo p^e.
+            0 if a is not coprime to p^e.
 
     Euler's criterion is used in this function.
     
@@ -260,6 +261,15 @@ def is_quadratic_residue_prime_power(a: int, p: int, e: int)->int:
 
 
 def floor_sqrt(x: int)->int:
+    """ Returns the floor of the square root of x.
+
+    Args:
+        x: the input non-negative integer, whose sqrt is to be found.
+
+    Returns:
+        int: the floor of the square root of x.
+    
+    """
     length: int = len(bin(x)[2:])
     k: int = (length-1)//2
     sqrt: int = 1<<k
@@ -274,6 +284,16 @@ def floor_sqrt(x: int)->int:
 
 
 def floor_root(x: int, p: int)->int:
+    """ Returns the floor of the p'th root of x.
+
+    Args:
+        x: the non-negative integer, whose root is to be found.
+        p: a positive integer, such that floor of x^(1/p) is returned.
+
+    Returns:
+        int: floor of x^(1/p).
+    
+    """
     length: int = len(bin(x)[2:])
     k: int = (length-1)//p
     root: int = 1<<k
@@ -287,8 +307,16 @@ def floor_root(x: int, p: int)->int:
 # print(floor_root(1234, 10))
 
 def is_perfect_power(x: int)->bool:
-    length = len(bin(x)[2:])
-    pow_range = length-1
+    """ Checks if x is a perfect power of an integer or not.
+
+    Args:
+        x: an integer
+
+    Returns:
+        bool: True if x = root^p for some integers root and p, False otherwise
+    """
+    length: int = len(bin(x)[2:])
+    pow_range: int = length-1
     for p in range(2, pow_range+1):
         k: int = (length-1)//p
         root: int = 1<<k
@@ -305,6 +333,9 @@ def is_perfect_power(x: int)->bool:
 
 
 def is_in_miller_rabin_set(n: int, a: int)->bool:
+    """ Helper function used in is_prime function, used to implement Miller-Rabin algorithm
+    
+    """
     t = n-1
     h = 0
     while t%2 == 0:
@@ -320,6 +351,16 @@ def is_in_miller_rabin_set(n: int, a: int)->bool:
 
 
 def is_prime(n: int)->bool:
+    """ Checks if n is prime or not.
+
+    Args:
+        n: a positive integer
+
+    Returns:
+        bool: True if n is prime, False otherwise.
+    
+    The function uses Miller-Rabin algorithm.
+    """
     k = 100
 
     for i in range(0, k):
@@ -334,6 +375,16 @@ def is_prime(n: int)->bool:
 
 
 def gen_prime(m: int)->int:
+    """ Generates a random prime less than or equal to m.
+
+    Args:
+        m: the upper bound for the random prime
+
+    Returns:
+        int: a random prime in the range [2, m]
+    
+    This function uses the Niller-Rabin algorithm
+    """
     while True:
         n = random.randint(2, m)
 
@@ -354,6 +405,16 @@ def gen_prime(m: int)->int:
 
 
 def gen_k_bit_prime(k: int)->int:
+    """ Generates a random prime of k bits
+
+    Args:
+        k: a positive integer
+
+    Returns:
+        int: a random k-bit prime
+    
+    This function uses the Miller-Rabin algorithm
+    """
     while True:
         n = random.randint(pow(2, k-1), pow(2, k)-1)
         
@@ -373,11 +434,24 @@ def gen_k_bit_prime(k: int)->int:
 
 
 def find_factor(n: int):
+    """ Helper function for factor function, it finds a factor of n.
+    
+    """
     for i in range(2, floor_sqrt(n)+1):
         if n%i == 0: return i
 
 
 def factor(n: int)->list[tuple[int, int]]:
+    """ Returns the prime factorisation of n.
+
+    Args:
+        n: a positive integer.
+
+    Returns:
+        list[tuple[int, int]]: Each tuple in the list is of the form (p, e), where p is a prime which divides n and e is the exponent of p in n.
+            The list is sorted in ascending order of the first element of each tuple.
+    
+    """
     if n == 1: return []
 
     if is_prime(n):
@@ -404,6 +478,15 @@ def factor(n: int)->list[tuple[int, int]]:
 
 
 def euler_phi(n: int)->int:
+    """ Returns the value of euler's totient function, phi, of n.
+
+    Args:
+        n: a positive integer, whose phi needs to be found.
+
+    Returns:
+        int: phi(n)
+    
+    """
     phi = 1
     factors = factor(n)
     for p, a in factors:
@@ -415,6 +498,15 @@ def euler_phi(n: int)->int:
 
 
 def gaussian_elimination(A: list[list[int]])->list[list[fractions.Fraction]]:
+    """ Performs gaussian elimination on a matrix of integers
+
+    Args:
+        A: input matrix.
+
+    Returns:
+        list[list[fractions.Fraction]]: the echelon form of A, which is a matrix of fractions. 
+    
+    """
     """
         A is m*n, each element of A is a row
         m = no. of rows, n = no. of columns
@@ -909,12 +1001,21 @@ def aks_test(n: int)->bool:
 
 
 def get_generator(p: int)->int:
-    factorisation = factor(p-1)
-    r = len(factorisation)
-    c = 1
+    """ Returns a generator of (Z_p)^*, where p is a prime.
+
+    Args:
+        p: a prime number
+
+    Returns:
+        int: a generator of (Z_p)^*
+    
+    """
+    factorisation: list[tuple[int, int]] = factor(p-1)
+    r: int = len(factorisation)
+    c: int = 1
     for i in range(0, r):
-        b = 1
-        a = 0
+        b: int = 1
+        a: int = 0
         while b == 1:
             a = random.randint(1, p-1)
             b = pow(a, (p-1)//factorisation[i][0], p)
@@ -926,6 +1027,22 @@ def get_generator(p: int)->int:
 
 
 def discrete_log(x: int, g: int, p: int)->int:
+    """ Returns the discrete logarithm of x to the base g in (Z_p)^*, where p is a prime
+
+    Args:
+        x: an element of (Z_p)^*
+        g: an element of (Z_p)^*
+        p: a prime number
+
+    Returns:
+        int: the discrete logarithm of x to the base g in (Z_p)^*
+
+    Raises:
+        ValueError: Raised if the discrete logarithm does not exist.
+    
+    The baby step/giant step method is used in this function
+    
+    """
     q = p-1
     m = floor_sqrt(q)
     values = {}
@@ -950,6 +1067,16 @@ def discrete_log(x: int, g: int, p: int)->int:
 
 
 def legendre_symbol(a: int, p: int)->int:
+    """ Returns the Legendre symbol (a | p), where p is a prime
+
+    Args:
+        a: an integer
+        p: a prime number
+
+    Returns:
+        int: The Legendre symbol, (a | p)
+    
+    """
     if a%p == 0: return 0
     if p == 2: return 1
     if pow(a, (p-1)//2, p) == 1: return 1
@@ -957,6 +1084,16 @@ def legendre_symbol(a: int, p: int)->int:
 
 
 def jacobi_symbol(a: int, n: int)->int:
+    """ Returns the Jacobi symbol (a | n)
+
+    Args:
+        a: an integer
+        n: a positive integer
+
+    Returns:
+        int: The Jacobi symbol (a | n)
+    
+    """
     if pair_gcd(a, n) != 1: return 0
     j = 1
     factors = factor(n)
@@ -968,6 +1105,16 @@ def jacobi_symbol(a: int, n: int)->int:
 
 
 def modular_sqrt_prime(x: int, p: int)->int:
+    """ Returns the modular square root of a number modulo a prime number
+
+    Args:
+        x: the number 
+        p: the prime number, where square root is found in Z_p
+
+    Returns:
+        int: modular square root of x modulo p
+    
+    """
     if is_quadratic_residue_prime(x, p) != 1:
         raise ValueError("Modular square root does not exist")
     if p == 2: return 1
@@ -1028,7 +1175,7 @@ def modular_sqrt_2_pow(x: int, e: int)->list[int]:
 def modular_sqrt(x: int, z: int)->int:
     y = z
     pow_2 = 0
-    if y%2 == 0:
+    while y%2 == 0:
         pow_2+=1
         y = y//2
 
@@ -1084,3 +1231,219 @@ def is_smooth(m: int, y: int)->bool:
                 m = m//i
         if m <= y: return True
     return False
+
+
+def gaussian_elimination_modulo_p(A: list[list[int]], p: int)->list[list[int]]:
+    """
+        A is m*n, each element of A is a row
+        m = no. of rows, n = no. of columns
+        A[i-1] is ith row, A[:][j-1] is jth column
+    """
+    B = [[A[i][j] for j in range(len(A[i]))] 
+                for i in range(len(A))]
+    r = 0
+    m = len(A)
+    n = len(A[0])
+    for j in range(1, n+1):
+        l = 0
+        i = r
+        while l == 0 and i < m:
+            i += 1
+            # print(i)
+            if B[i-1][j-1]%p != 0: l = i
+        if l != 0:
+            r = r+1
+            swap = B[r-1][:]
+            B[r-1] = B[l-1][:]
+            B[l-1] = swap[:]
+            b = mod_inv(B[r-1][j-1], p)
+            for iter in range(len(B[r-1])): 
+                B[r-1][iter] *= b
+                B[r-1][iter] %= p
+            for i in range(1, m+1):
+                if i != r:
+                    b = B[i-1][j-1]
+                    for iter in range(len(B[i-1])): 
+                        B[i-1][iter] -= b*B[r-1][iter]
+                        B[i-1][iter] %= p            
+
+    return B
+
+def prob_find_factor(n: int)->int:
+    y = pow(2, floor_sqrt((len(bin(n)[2:])*len(bin(len(bin(n)[2:]))[2:]))//2))
+    primes = []
+    for i in range(2, y+1):
+        if is_prime(i): primes.append(i)
+    k = len(primes)
+    # print(y, primes, k)
+
+    v = []
+    a = []
+
+    d = random.randint(1, n-1)
+    while pair_gcd(d, n) != 1: d = random.randint(1, n-1)
+    # print(d)
+
+    counter_lim = 10000 # I am getting lucky with this limit, I need it to prevent an infinite loop
+
+    i = 0
+    while True:
+        i = i+1
+        # print(i)
+        counter = 0
+        while counter < counter_lim:
+            counter+=1
+            a_i = random.randint(1, n-1)
+            while pair_gcd(a_i, n) != 1: a_i = random.randint(1, n-1)
+            m_i = (a_i*a_i*d)%n
+            # print(a_i, m_i)
+            e_i = [0 for iter in range(k)]
+            for iter in range(k):
+                pow_p_i = 0
+                while m_i%primes[iter] == 0:
+                    m_i = m_i//primes[iter]
+                    pow_p_i += 1
+                e_i[iter] = pow_p_i
+            if m_i == 1: 
+                break
+        if counter == counter_lim:
+            # print("noooooooooooooo1")
+            return prob_find_factor(n)
+        
+        v.append(e_i)
+        v[i-1].append(1)
+        a.append(a_i)
+        if i == k+2: break
+    
+    # print(a)
+    # print(v)
+
+    # print(len(v), len(v[0]))
+
+    A = [[v[i][j] for i in range(k+2)] for j in range(k+1)]
+    G = gaussian_elimination_modulo_p(A, 2)
+
+    # print(G)
+
+    zeroes = [0 for i in range(len(A[0]))]
+    not_possible = zeroes[:]; not_possible[k] = 1
+
+    c = []
+    for Gi in G:
+        if Gi == not_possible:
+            # print("nooooooooooooo2")
+            return prob_find_factor(n)
+        elif Gi == zeroes:
+            c.append(0)
+        else:
+            c.append(1)
+    
+    if c == [0 for i in range(k+1)]: 
+        # print("noooooooooooooooo3")
+        return prob_find_factor(n)
+    c.append(1)
+    # print(c)
+
+    alpha = 1
+
+    for i in range(k+2):
+        alpha *= pow(a[i], c[i])
+    # print(alpha, d)
+
+    e = [0 for i in range(k+1)]
+    for i in range(k+1):
+        for j in range(k+2):
+            e[i] += c[j]*v[j][i]
+
+    # print(e)
+
+    beta = 1
+    for i in range(k):
+        beta *= pow(primes[i], e[i]//2)
+    # beta //= pow(d, e[k]//2)
+
+    # print(alpha, beta)
+
+    gamma = (alpha//beta)*pow(d, e[k]//2)
+
+    # print(gamma)
+    if gamma%n == 1 or gamma%n == -1:
+        # print("noooooooooooooooo4")
+        return prob_find_factor(n)
+    
+    factor = pair_gcd((gamma-1)%n, n)
+    if factor == 1: 
+        # print("noooooooooooooooooooo5")
+        return prob_find_factor(n)
+    return factor
+
+# print(prob_find_factor(1408198281))
+
+def probabilistic_factor(n: int)->list[tuple[int, int]]:
+    factors = []
+    # to ensure that n is odd
+    pow_2 = 0
+    while n%2 == 0:
+        pow_2 += 1
+        n = n//2
+    if pow_2 != 0: factors.append((2, pow_2))
+    if n == 1: return factors
+
+    # to ensure that n is not prime
+    if is_prime(n):
+        factors.append((n, 1))
+        return factors
+    
+    # to ensure that n is not of the form p^e for some prime p
+    length = len(bin(n)[2:])
+    pow_range = length-1
+    for p in range(2, pow_range+1):
+        k: int = (length-1)//p
+        root: int = 1<<k
+
+        for i in range(k-1, -1, -1):
+            if pow((root + (1<<i)), p) <= n:
+                root += 1<<i
+
+        if pow(root, p) == n:
+            factors.append((root, p))
+            return factors
+        
+    # To ensure that n is not y-smooth    
+    y = pow(2, floor_sqrt((len(bin(n)[2:])*len(bin(len(bin(n)[2:]))[2:]))//2))
+    for i in range(2, y+1):
+        pow_i = 0
+        while n%i == 0:
+            pow_i += 1
+            n = n//i
+        if pow_i != 0: factors.append((i, pow_i))
+    if n == 1: return factors
+
+    # The actual algorithm
+
+    if is_prime(n):
+        factors.append((n, 1))
+        return factors
+    
+    d = prob_find_factor(n)
+    # print(d, n//d)
+    n_factorization = dict(probabilistic_factor(n//d))
+    new_factors = dict(probabilistic_factor(d))
+    for prime in new_factors:
+        if prime in n_factorization:
+            n_factorization[prime] += new_factors[prime]
+        else:
+            n_factorization[prime] = new_factors[prime]
+
+    dict_factors = dict(factors)
+    for prime in n_factorization:
+        if prime in dict_factors:
+            dict_factors[prime] += n_factorization[prime]
+        else:
+            dict_factors[prime] = n_factorization[prime]
+
+    factors_final = []
+    for prime in sorted(dict_factors):
+        factors_final.append((prime, dict_factors[prime]))
+
+    return factors_final
