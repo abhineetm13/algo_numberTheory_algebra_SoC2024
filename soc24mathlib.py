@@ -1,16 +1,15 @@
 import random
-# from typing import Self
 import fractions
 
-def pair_gcd(a: int, b: int)->int:
+def pair_gcd(a: int, b: int) -> int:
     """Returns the gcd of two integers.
     
     Args:
-        a: the first integer.
-        b: the second integer.
+        a: The first integer
+        b: The second integer
 
     Returns:
-        int: gcd of a and b.
+        int: Gcd of a and b
 
     The Euclidean algorithm is used in the implementation.
 
@@ -23,14 +22,14 @@ def pair_gcd(a: int, b: int)->int:
 # print(pair_gcd(1, -1))
 
 
-def pair_egcd_recursive(a: int, b: int)->tuple[int, int, int, int]:
+def pair_egcd_recursive(a: int, b: int) -> tuple[int, int, int, int]:
     """This recursive function is used in pair_egcd function.
     
     Returns (a, b, x, y), where a, b are the arguments, and x, y are integers such that ax+by=gcd(a, b).
     
     Args:
-        a: the first integer.
-        b: the second integer.
+        a: The first integer
+        b: The second integer
 
     Returns:
         tuple: (a, b, x, y), where
@@ -45,17 +44,17 @@ def pair_egcd_recursive(a: int, b: int)->tuple[int, int, int, int]:
         return (a, b, next_value[3], (next_value[2]-(a//b)*next_value[3]))
 
 
-def pair_egcd(a: int, b: int)->tuple[int, int, int]:
+def pair_egcd(a: int, b: int) -> tuple[int, int, int]:
     """Returns (x, y, d) where d is gcd(a, b) and x, y are integers such that ax+by=d.
 
     Args:
-        a: the first integer.
-        b: the second integer
+        a: The first integer
+        b: The second integer
 
     Returns:
         tuple: (x, y, d) where
             d: gcd of a, b
-            x, y are integers such that ax+by=d.
+            x, y are integers such that ax+by=d
 
     The extended euclidean algorithm is implemented in this function.
 
@@ -64,14 +63,14 @@ def pair_egcd(a: int, b: int)->tuple[int, int, int]:
     return (value[2], value[3], a*value[2]+b*value[3])
 
 
-def gcd(*args: int)->int:
-    """Returns the gcd of any number of integers.
+def gcd(*args: int) -> int:
+    """Returns the gcd of any number of integers
 
     Args:
-        *args: each argument is an integer.
+        *args: Each argument is an integer
 
     Returns:
-        int: the gcd of all the arguments.
+        int: The gcd of all the arguments
     
     """
     gcd: int = 0
@@ -80,17 +79,17 @@ def gcd(*args: int)->int:
     return gcd
 
 
-def pair_lcm(a: int, b: int)->int:
+def pair_lcm(a: int, b: int) -> int:
     """Returns the lcm of two integers.
 
     Args:
-        a: the first integer.
-        b: the second integer.
+        a: The first integer
+        b: The second integer
 
     Returns:
-        int: the lcm of a, b.
+        int: The lcm of a, b
 
-    The relation between gcd and lcm is used here.    
+    The relation between gcd and lcm is used here.
 
     """
     d: int = pair_gcd(a, b)
@@ -99,14 +98,14 @@ def pair_lcm(a: int, b: int)->int:
 # print(pair_lcm(540, -54))
 
 
-def lcm(*args: int)->int:
+def lcm(*args: int) -> int:
     """Returns the lcm of any number of integers.
 
     Args:
-        *args: each argument is an integer.
+        *args: Each argument is an integer
 
     Returns:
-        int: the lcm of all the integers.
+        int: The lcm of all the integers
 
     """
     lcm: int = 1 
@@ -117,15 +116,15 @@ def lcm(*args: int)->int:
 # print(lcm(1, 2, 3))
 
 
-def are_relatively_prime(a: int, b: int)->bool:
+def are_relatively_prime(a: int, b: int) -> bool:
     """This functions checks if two numbers are coprime or not.
 
     Args:
-        a: the first integer.
-        b: the second integer.
+        a: The first integer
+        b: The second integer
 
     Returns:
-        bool: True if a, b are coprime, False otherwise.
+        bool: True if a, b are coprime, False otherwise
 
     The function checks if the gcd of the integers is 1 or not.
     
@@ -138,19 +137,19 @@ def are_relatively_prime(a: int, b: int)->bool:
 # print(are_relatively_prime(548, 50))
 
 
-def mod_inv(a: int, n: int)->int:
+def mod_inv(a: int, n: int) -> int:
     """Returns the modular inverse of a modulo n.
 
     Args:
-        a: the integer whose inverse is to be found.
-        n: the inverse is to be found modulo n.
+        a: The integer whose inverse is to be found.
+        n: The inverse is to be found modulo n.
 
     Returns:
-        int: inverse of a modulo n.
+        int: Inverse of a modulo n.
 
     Raises:
         ValueError: 
-            This error is raised if inverse of a modulo n does not exist.
+            If inverse of a modulo n does not exist.
     
     """
     if pair_gcd(a, n) != 1:
@@ -164,17 +163,17 @@ def mod_inv(a: int, n: int)->int:
 # print(mod_inv(549, 50))
 
 
-def crt(a: list[int], n: list[int])->int:
+def crt(a: list[int], n: list[int]) -> int:
     """Solves a system of linear congruences of the form a=a[i] (mod n[i]).
 
     Returns the unique value of (a modulo product of all n[i]) such that a=a[i] (mod n[i]).
 
     Args:
-        a: list of a[i], the residues modulo n[i]
-        n: list of n[i], all n[i] should be pairwise coprime.
+        a: List of a[i], the residues modulo n[i]
+        n: List of n[i], all n[i] should be pairwise coprime.
 
     Returns:
-        int: the unique value of (a modulo product of all n[i]) such that a=a[i] (mod n[i]).
+        int: The unique value of (a modulo product of all n[i]) such that a=a[i] (mod n[i]).
 
     The Chinese Remainder Theorem is applied here.
     
@@ -194,12 +193,12 @@ def crt(a: list[int], n: list[int])->int:
 # print(crt([1, 1, 2], [2, 3, 5]))
 
 
-def is_quadratic_residue_prime(a: int, p: int)->int:
+def is_quadratic_residue_prime(a: int, p: int) -> int:
     """Checks whether integer a is a quadratic residue modulo prime p.
 
     Args:
-        a: the integer to be checked.
-        p: a prime number.
+        a: The integer to be checked.
+        p: A prime number.
 
     Returns:
         int:
@@ -226,13 +225,13 @@ def is_quadratic_residue_prime(a: int, p: int)->int:
 # print(is_quadratic_residue_prime(10111111111111111, 2))
     
 
-def is_quadratic_residue_prime_power(a: int, p: int, e: int)->int:
+def is_quadratic_residue_prime_power(a: int, p: int, e: int) -> int:
     """Checks whether integer a is a quadratic residue modulo p^e.
 
     Args:
-        a: the integer to be checked.
-        p: a prime number.
-        e: the power to which p is to be raised. (e>=1)
+        a: The integer to be checked.
+        p: A prime number.
+        e: The power to which p is to be raised. (e>=1)
 
     Returns:
         int: 
@@ -260,14 +259,14 @@ def is_quadratic_residue_prime_power(a: int, p: int, e: int)->int:
 # print(is_quadratic_residue_prime_power(1111000011, 100, 2))
 
 
-def floor_sqrt(x: int)->int:
+def floor_sqrt(x: int) -> int:
     """ Returns the floor of the square root of x.
 
     Args:
-        x: the input non-negative integer, whose sqrt is to be found.
+        x: The input non-negative integer, whose sqrt is to be found.
 
     Returns:
-        int: the floor of the square root of x.
+        int: The floor of the square root of x.
     
     """
     length: int = len(bin(x)[2:])
@@ -283,15 +282,15 @@ def floor_sqrt(x: int)->int:
 # print(floor_sqrt(123456))
 
 
-def floor_root(x: int, p: int)->int:
+def floor_root(x: int, p: int) -> int:
     """ Returns the floor of the p'th root of x.
 
     Args:
-        x: the non-negative integer, whose root is to be found.
-        p: a positive integer, such that floor of x^(1/p) is returned.
+        x: The non-negative integer, whose root is to be found.
+        p: A positive integer, such that floor of x^(1/p) is returned.
 
     Returns:
-        int: floor of x^(1/p).
+        int: Floor of x^(1/p).
     
     """
     length: int = len(bin(x)[2:])
@@ -306,11 +305,11 @@ def floor_root(x: int, p: int)->int:
 
 # print(floor_root(1234, 10))
 
-def is_perfect_power(x: int)->bool:
+def is_perfect_power(x: int) -> bool:
     """ Checks if x is a perfect power of an integer or not.
 
     Args:
-        x: an integer
+        x: An integer
 
     Returns:
         bool: True if x = root^p for some integers root and p, False otherwise
@@ -332,16 +331,28 @@ def is_perfect_power(x: int)->bool:
 # print(is_perfect_power(127))
 
 
-def is_in_miller_rabin_set(n: int, a: int)->bool:
-    """ Helper function used in is_prime function, used to implement Miller-Rabin algorithm
+def is_in_miller_rabin_set(n: int, a: int) -> bool:
+    """ Helper function used in is_prime function
+    
+    Used to implement Miller-Rabin algorithm
+
+    Args:
+        n: The prime number
+        a: The random number which should be checked if it is in a set or not
+            The set is defined in the Miller-Rabin algorithm as 
+            L_n:={a in Z_n\{0}: pow(a, t*pow(2, h), n) == 1 and
+                pow(a, t*pow(2, j+1))%n = 1 => pow(a, t*pow(2, j))%n == +-1 for j = 0, ..., h-1} 
+
+    Returns:
+        bool: True if a is in the set, False otherwise
     
     """
-    t = n-1
-    h = 0
+    t: int = n-1
+    h: int = 0
     while t%2 == 0:
         t = t//2
         h+=1
-    b = pow(a, t, n)
+    b: int = pow(a, t, n)
     if b == 1: return True
     for j in range(0, h):
         if b == n-1 or b == -1 : return True
@@ -350,21 +361,21 @@ def is_in_miller_rabin_set(n: int, a: int)->bool:
     return False
 
 
-def is_prime(n: int)->bool:
+def is_prime(n: int) -> bool:
     """ Checks if n is prime or not.
 
     Args:
-        n: a positive integer
+        n: A positive integer
 
     Returns:
         bool: True if n is prime, False otherwise.
     
     The function uses Miller-Rabin algorithm.
     """
-    k = 100
+    k: int = 100
 
     for i in range(0, k):
-        a = random.randint(1, n-1)
+        a: int = random.randint(1, n-1)
         if is_in_miller_rabin_set(n, a) == False:
             return False
     
@@ -374,21 +385,21 @@ def is_prime(n: int)->bool:
 # print(pow(1234, 123, 123456))
 
 
-def gen_prime(m: int)->int:
+def gen_prime(m: int) -> int:
     """ Generates a random prime less than or equal to m.
 
     Args:
-        m: the upper bound for the random prime
+        m: The upper bound for the random prime
 
     Returns:
-        int: a random prime in the range [2, m]
+        int: A random prime in the range [2, m]
     
     This function uses the Niller-Rabin algorithm
     """
     while True:
-        n = random.randint(2, m)
+        n: int = random.randint(2, m)
 
-        is_prime_trial = True
+        is_prime_trial: bool = True
         for p in [2, 3, 5, 7]:
             if n == p: return n
             if n%p == 0:
@@ -408,17 +419,17 @@ def gen_k_bit_prime(k: int)->int:
     """ Generates a random prime of k bits
 
     Args:
-        k: a positive integer
+        k: A positive integer
 
     Returns:
-        int: a random k-bit prime
+        int: A random k-bit prime
     
     This function uses the Miller-Rabin algorithm
     """
     while True:
-        n = random.randint(pow(2, k-1), pow(2, k)-1)
+        n: int = random.randint(pow(2, k-1), pow(2, k)-1)
         
-        is_prime_trial = True
+        is_prime_trial: bool = True
         for p in [2, 3, 5, 7]:
             if n == p: return n
             if n%p == 0:
@@ -433,22 +444,30 @@ def gen_k_bit_prime(k: int)->int:
 # print(x, is_prime(x))
 
 
-def find_factor(n: int):
-    """ Helper function for factor function, it finds a factor of n.
+def find_factor(n: int) -> int:
+    """ Helper function for factor function, it finds a factor of n by trial division.
+
+    Args:
+        n: The integer whose facor is to be found
+
+    Returns:
+        int: The least prime factor of n
     
     """
     for i in range(2, floor_sqrt(n)+1):
         if n%i == 0: return i
+    return 0
 
 
-def factor(n: int)->list[tuple[int, int]]:
+def factor(n: int) -> list[tuple[int, int]]:
     """ Returns the prime factorisation of n.
 
     Args:
-        n: a positive integer.
+        n: A positive integer.
 
     Returns:
-        list[tuple[int, int]]: Each tuple in the list is of the form (p, e), where p is a prime which divides n and e is the exponent of p in n.
+        list[tuple[int, int]]: The factorisation of n
+            Each tuple in the list is of the form (p, e), where p is a prime which divides n and e is the exponent of p in n.
             The list is sorted in ascending order of the first element of each tuple.
     
     """
@@ -457,18 +476,18 @@ def factor(n: int)->list[tuple[int, int]]:
     if is_prime(n):
         return [(n, 1)]
     
-    d = find_factor(n)
+    d: int = find_factor(n)
     # print(d, n//d)
-    n_factorisation = dict(factor(n//d))
+    n_factorisation: dict[int, int] = dict(factor(n//d))
 
-    new_factors = dict(factor(d))
+    new_factors: dict[int, int] = dict(factor(d))
     for p in new_factors:
         if p in n_factorisation:
             n_factorisation[p] += new_factors[p]
         else:
             n_factorisation[p] = new_factors[p]
 
-    factors = []
+    factors: list[tuple[int, int]] = []
     for p in sorted(n_factorisation):
         factors.append((p, n_factorisation[p]))
 
@@ -487,8 +506,8 @@ def euler_phi(n: int)->int:
         int: phi(n)
     
     """
-    phi = 1
-    factors = factor(n)
+    phi: int = 1
+    factors: list[tuple[int, int]] = factor(n)
     for p, a in factors:
         phi = phi*pow(p, a-1)*(p-1)
 
@@ -505,21 +524,21 @@ def gaussian_elimination(A: list[list[int]])->list[list[fractions.Fraction]]:
 
     Returns:
         list[list[fractions.Fraction]]: the echelon form of A, which is a matrix of fractions. 
-    
+
+    A is m*n, each element of A is a row
+    m = no. of rows, n = no. of columns
+    A[i-1] is ith row, A[:][j-1] is jth column
+
+    The fractions.Fraction class is used.
     """
-    """
-        A is m*n, each element of A is a row
-        m = no. of rows, n = no. of columns
-        A[i-1] is ith row, A[:][j-1] is jth column
-    """
-    B = [[fractions.Fraction(A[i][j], 1) for j in range(len(A[i]))] 
+    B: list[list[fractions.Fraction]] = [[fractions.Fraction(A[i][j], 1) for j in range(len(A[i]))] 
                 for i in range(len(A))]
-    r = 0
-    m = len(A)
-    n = len(A[0])
+    r: int = 0
+    m: int = len(A)
+    n: int = len(A[0])
     for j in range(1, n+1):
-        l = 0
-        i = r
+        l: int = 0
+        i: int = r
         while l == 0 and i < m:
             i += 1
             # print(i)
@@ -529,21 +548,45 @@ def gaussian_elimination(A: list[list[int]])->list[list[fractions.Fraction]]:
             swap = B[r-1][:]
             B[r-1] = B[l-1][:]
             B[l-1] = swap[:]
-            b = 1/B[r-1][j-1]
+            b: fractions.Fraction = 1/B[r-1][j-1]
             for iter in range(len(B[r-1])): B[r-1][iter] *= b
             for i in range(1, m+1):
                 if i != r:
-                    b = B[i-1][j-1]
-                    for iter in range(len(B[i-1])): B[i-1][iter] -= b*B[r-1][iter]            
+                    b1: fractions.Fraction = B[i-1][j-1]
+                    for iter in range(len(B[i-1])): B[i-1][iter] -= b1*B[r-1][iter]            
 
     return B
 
 
 class QuotientPolynomialRing:
+    """ This class represents a polynomial quotient ring.
+
+    An element in this polynomial ring is represented by a list of integers p, 
+    where p[i] is the "i"th coefficient.
+
+    Attributes:
+        pi_generator: This is the modulus of the polynomial ring
+        element: This is the element of the quotient polynomial ring of modulus pi_generator
+    """
+
     pi_generator: list[int]
+
     element: list[int]
 
-    def __init__(self, poly: list[int], pi_gen:list[int])->None:
+    def __init__(self, poly: list[int], pi_gen:list[int]) -> None:
+        """ Initializes the instance of polynomial based on the given element and pi_generator
+
+        Args:
+            poly: The element of the quotient ring
+            pi_gen: The polynomial based on which the ring is formed
+
+        Raises:
+            ValueError("Empty pi_generator"):
+                If the pi_generator is an empty list
+            ValueError("Pi_generator is not monic"): 
+                If the pi_generator is not a monic polynomial
+
+        """
         if pi_gen == []:
             raise ValueError('Empty pi_generator')
         if pi_gen[len(pi_gen)-1] != 1:
@@ -553,31 +596,62 @@ class QuotientPolynomialRing:
         return
 
     @staticmethod
-    def Deg(p: list[int])->list[int]:
+    def Deg(p: list[int]) -> int:
+        """ Returns the degree of a polynomial represented by a list
+
+        Args:
+            p: The polynomial
+
+        Returns:
+            int: The degree of the polynomial
+        
+        """
         if len(p) == 0: return 0
         for i in range(len(p)-1, -1, -1):
             if p[i]!= 0: return i
         return 0
 
     @staticmethod
-    def Mod_gen(p: list[int], gen: list[int])->"QuotientPolynomialRing":
+    def Mod_gen(p: list[int], gen: list[int]) -> "QuotientPolynomialRing":
+        """ Returns the representative of the polynomial p in the ring made by gen
+
+        Args:
+            p: The polynomial whose representative is to be found
+            gen: The polynomial using which the ring is made
+
+        Returns:
+            QuotiemtPolynomialRing: The representative of p with pi_generator as gen
+        """
         while len(p) >= len(gen):
-            order_diff = len(p)-len(gen)
+            order_diff: int = len(p)-len(gen)
             for i in range(len(p)-order_diff):
                 p[i+order_diff] -= p[len(p)-1]*gen[i]
             p.pop()
         return QuotientPolynomialRing(p, gen)
 
     @staticmethod
-    def Add(poly1: "QuotientPolynomialRing", poly2: "QuotientPolynomialRing")->"QuotientPolynomialRing":
+    def Add(poly1: "QuotientPolynomialRing", poly2: "QuotientPolynomialRing") -> "QuotientPolynomialRing":
+        """ Returns the sum of two polynomials in the quotient ring
+
+        Args:
+            poly1: The first polynomial
+            poly2: The secund polynomial
+
+        Returns:
+            QuotientPolynomialRing: The sum of the two polynomials
+
+        Raises:
+            ValueError: If the two polynomials have different pi_generators
+        
+        """
         if poly1.pi_generator != poly2.pi_generator:
             raise ValueError('Different pi_generators')
         
-        sum = []
+        sum: list[int] = []
 
-        l1 = min(len(poly1.element), len(poly2.element))
-        l2 = max(len(poly1.element), len(poly2.element))
-        Max = poly1
+        l1: int = min(len(poly1.element), len(poly2.element))
+        l2: int = max(len(poly1.element), len(poly2.element))
+        Max: "QuotientPolynomialRing" = poly1
         if len(poly1.element) == l2: Max = poly1
         else: Max = poly2
 
@@ -587,26 +661,39 @@ class QuotientPolynomialRing:
         for i in range(l1, l2):
             sum.append(Max.element[i])
 
-        sum = QuotientPolynomialRing.Mod_gen(sum, poly1.pi_generator)
+        sum_poly: "QuotientPolynomialRing" = QuotientPolynomialRing.Mod_gen(sum, poly1.pi_generator)
         
-        return sum
+        return sum_poly
     
     @staticmethod
-    def Sub(poly1: "QuotientPolynomialRing", poly2: "QuotientPolynomialRing")->"QuotientPolynomialRing":
+    def Sub(poly1: "QuotientPolynomialRing", poly2: "QuotientPolynomialRing") -> "QuotientPolynomialRing":
+        """ Retuns the difference of two polynomials
+
+        Args:
+            poly1: The first polynomial
+            poly2: The second polynomial
+
+        Returns:
+            QuotientPolynomialRing: The difference of the two polynomials
+
+        Raises:
+            ValueError: If the polynomials have different pi_generators
+        
+        """
         if poly1.pi_generator != poly2.pi_generator:
             raise ValueError('Different pi_generators')
         
-        e1: list = poly1.element
-        e2: list = poly2.element
+        e1: list[int] = poly1.element
+        e2: list[int] = poly2.element
         l: int = 0
-        longer: list = []
+        longer: list[int] = []
         if len(e1) > len(e2): 
             l = len(e2)
             longer = e1
         else: 
             l = len(e1)
             longer = e2
-        diff: list = []
+        diff: list[int] = []
         for i in range(l):
             diff.append(e1[i]-e2[i])
 
@@ -617,42 +704,89 @@ class QuotientPolynomialRing:
             for i in range(l, len(longer)):
                 diff.append(-longer[i])
 
-        diff = QuotientPolynomialRing.Mod_gen(diff, poly1.pi_generator)
+        diff_poly: "QuotientPolynomialRing" = QuotientPolynomialRing.Mod_gen(diff, poly1.pi_generator)
 
-        return diff
+        return diff_poly
     
     @staticmethod
-    def Mul(poly1: "QuotientPolynomialRing", poly2: "QuotientPolynomialRing")->"QuotientPolynomialRing":
+    def Mul(poly1: "QuotientPolynomialRing", poly2: "QuotientPolynomialRing") -> "QuotientPolynomialRing":
+        """ Returns the product of two polynomials in the ring
+
+        Args:
+            poly1: The first polynomial
+            poly2: The second polynomial
+
+        Returns:
+            QuotientPolynomialRing: The product of the two polynomials
+
+        Raises:
+            ValueError: If the two polynomials have different pi_generators
+        
+        """
         if poly1.pi_generator != poly2.pi_generator:
             raise ValueError('Different pi_generators')
-        deg = 2*(len(poly1.element)-1)
-        prod = [0 for x in range(deg+1)]
+        deg: int = 2*(len(poly1.element)-1)
+        prod: list[int] = [0 for x in range(deg+1)]
         for i in range(len(poly1.element)):
             for j in range(len(poly2.element)):
                 prod[i+j] += poly1.element[i]*poly2.element[j]
 
-        prod = QuotientPolynomialRing.Mod_gen(prod, poly1.pi_generator)
+        prod_poly: "QuotientPolynomialRing" = QuotientPolynomialRing.Mod_gen(prod, poly1.pi_generator)
 
-        return prod
+        return prod_poly
     
     @staticmethod
-    def Scale(p: list[int], a: int)->list[int]:
+    def Scale(p: list[int], a: int) -> list[int]:
+        """ Scales each element of a list p by a factor a
+
+        Args:
+            p: The list to be scaled
+            a: The scaling factor
+
+        Returns:
+            list[int]: The scaled list
+        
+        """
         for i in range(len(p)):
             p[i] *= a
         return p
     
     @staticmethod
-    def Common_factor(p: list[int])->int:
-        f = p[QuotientPolynomialRing.Deg(p)]
+    def Common_factor(p: list[int]) -> int:
+        """ Returns the gcd of a list of integers
+
+        The elements with value 0 are ignored
+
+        Args:
+            p: A list of integers
+
+        Returns:
+            int: The gcd of the list of integers, ignoring the 0s
+        
+        """
+        f: int = p[QuotientPolynomialRing.Deg(p)]
         if f == 0: return 0
         for i in range(len(p)):
             if p[i] != 0: f = pair_gcd(f, p[i])
         return f
     
     @staticmethod
-    def Reduce(p: list[int])->list[int]:
-        l = len(p)
-        gcd = 0
+    def Reduce(p: list[int]) -> list[int]:
+        """ Reruces a list of integers to the form where the gcd of all integers is 1
+
+        Args:
+            p: The list of integers to be reduced to the simplest form
+
+        Returns:
+            list[int]: The reduced form of the list
+
+        Example: 
+            Input: [2, -4, 2] 
+            Output: [1, -2, 1]
+        
+        """
+        l: int = len(p)
+        gcd: int = 0
         for i in range(l):
             if p[i] != 0:
                 gcd = p[i]
@@ -671,29 +805,42 @@ class QuotientPolynomialRing:
 
     @staticmethod
     def GCD(poly1: "QuotientPolynomialRing", poly2: "QuotientPolynomialRing")->"QuotientPolynomialRing":
+        """ Returns the gcd of two polynomials.
+
+        Args:
+            poly1: The first polynomial
+            poly2: The second polynomial
+
+        Returns:
+            QuotientPolynomialRing: The gcd of the two polynomials in the polynomial quotient ring
+
+        Raises:
+            ValueError: If the two polynomials have different pi_generators
+        
+        """
         if poly1.pi_generator != poly2.pi_generator:
             raise ValueError("Different pi_generators")
-        a = QuotientPolynomialRing.Common_factor(poly1.element)
-        b = QuotientPolynomialRing.Common_factor(poly2.element)
+        a: int = QuotientPolynomialRing.Common_factor(poly1.element)
+        b: int = QuotientPolynomialRing.Common_factor(poly2.element)
         # print(a, b)
-        f = pair_gcd(a, b)
-        p1 = poly1.element  # Assuming neither p1 nor y are zero polynomials
-        p2 = poly2.element
-        pow_X_1 = 0
+        f: int = pair_gcd(a, b)
+        p1: list[int] = poly1.element  # Assuming neither p1 nor y are zero polynomials
+        p2: list[int] = poly2.element
+        pow_X_1: int = 0
         while p1[0] == 0:
             for i in range(len(p1)-1): p1[i] = p1[i+1]
             p1[len(p1)-1] = 0
             pow_X_1 += 1
-        pow_X_2 = 0
+        pow_X_2: int = 0
         while p2[0] == 0:
             for i in range(len(p2)-1): p2[i] = p2[i+1]
             p2[len(p2)-1] = 0
             pow_X_2 += 1
         # return min(pow_X_1, pow_X_2)
 
-        x = QuotientPolynomialRing.Reduce(p1)
-        y = QuotientPolynomialRing.Reduce(p2)
-        zeroes = [0 for i in range(len(x))] # Assuming len(x) == len(y)
+        x: list[int] = QuotientPolynomialRing.Reduce(p1)
+        y: list[int] = QuotientPolynomialRing.Reduce(p2)
+        zeroes: list[int] = [0 for i in range(len(x))] # Assuming len(x) == len(y)
         while True:
             if y == zeroes: 
                 # print(x)
@@ -706,12 +853,12 @@ class QuotientPolynomialRing:
                 y[len(y)-1] = 0
             # print(QuotientPolynomialRing.Deg(x), QuotientPolynomialRing.Deg(y))
             if QuotientPolynomialRing.Deg(x) > QuotientPolynomialRing.Deg(y):
-                swap = x; x = y; y = swap
+                swap: list[int] = x; x = y; y = swap
                 # print(1)
         
             # print(x, y)
             if y[0] % x[0] == 0:
-                c = y[0]//x[0]
+                c: int = y[0]//x[0]
                 for i in range(len(x)): y[i] -= x[i]*c
             elif y[0] == 1: 
                 y = QuotientPolynomialRing.Scale(y, x[0])
@@ -724,7 +871,7 @@ class QuotientPolynomialRing:
                 # print(x[0], y[0])
                 a, b, d = pair_egcd(x[0], y[0])
                 # print(a, b, d)
-                x = QuotientPolynomialRing.Scale(x, a); y1 = QuotientPolynomialRing.Scale(y, b)
+                x = QuotientPolynomialRing.Scale(x, a); y1: list[int] = QuotientPolynomialRing.Scale(y, b)
                 for i in range(len(x)): x[i] += y1[i]
                 for i in range(len(x)): y[i] -= x[i]*(y[0]//x[0])
                 # print(x[0], y[0])
@@ -734,8 +881,8 @@ class QuotientPolynomialRing:
             # print()
     
         x = QuotientPolynomialRing.Scale(x, f)
-        d = min(pow_X_1, pow_X_2)
-        for p in range(d):
+        deg = min(pow_X_1, pow_X_2)
+        for p in range(deg):
             for i in range(len(x)-1, -1, -1): x[i] = x[i-1] 
             x[0] = 0
         # print(x)
@@ -743,16 +890,30 @@ class QuotientPolynomialRing:
     
     @staticmethod
     def Inv(poly: "QuotientPolynomialRing")->"QuotientPolynomialRing":
-        p = poly.element[:]
-        base = poly.pi_generator[:]
-        d1 =QuotientPolynomialRing.Deg(p)
-        d2 = QuotientPolynomialRing.Deg(base)
+        """ Returns the modular inverse of a polynomial in a quotient ring.
+
+        Args:
+            poly: The polynomial
+
+        Returns:
+            The inverse of the polynomial
+
+        Raises:
+            ValueError: If the modular inverse does not exist
+
+        The fractions.Fraction class from fractions module is used.
+        
+        """
+        p: list[int] = poly.element[:]
+        base: list[int] = poly.pi_generator[:]
+        d1: int =QuotientPolynomialRing.Deg(p)
+        d2: int = QuotientPolynomialRing.Deg(base)
         
         # Creating matrix for solving equations
-        A = []
+        A: list[list[int]] = []
         for iter1 in range(d1+d2):
             # print(1, iter1)
-            Ai = [0 for i in range(d1+d2)]
+            Ai: list[int] = [0 for i in range(d1+d2)]
             for iter2 in range(d2):
                 # print(2, iter2)
                 if iter1-iter2 > d1: Ai[iter2] = 0
@@ -768,11 +929,11 @@ class QuotientPolynomialRing:
         # print(A)
 
         # Solving the equations
-        B = gaussian_elimination(A)
+        B: list[list[fractions.Fraction]] = gaussian_elimination(A)
         # print(B)
 
-        inv = [0 for i in range(d2)]
-        null = [fractions.Fraction(0, 1) for i in range(d1+d2+1)]
+        inv: list[int] = [0 for i in range(d2)]
+        null: list[fractions.Fraction] = [fractions.Fraction(0, 1) for i in range(d1+d2+1)]
         for iter in range(d1+d2):
             if B[iter] == null: raise ValueError("Inverse does not exist")
             if B[iter][d1+d2].denominator != 1: raise ValueError("Inverse does not exist")  
@@ -780,128 +941,11 @@ class QuotientPolynomialRing:
             inv[iter] = int(B[iter][d1+d2])
         # print(inv)
         return QuotientPolynomialRing(inv, base)
-"""
-    @staticmethod
-    def Inv(poly: "QuotientPolynomialRing")->"QuotientPolynomialRing":
-        a = poly.element
-        r = QuotientPolynomialRing.Deg(a)
-        c = poly.pi_generator
-        n = QuotientPolynomialRing.Deg(c)
-        b = []
-        d = 1
-        if c[0] == 0:
-            if a[0] == 1: b.append(1)
-            elif a[0] == -1: b.append(-1)
-            else: raise ValueError("Inverse does not exist")
-        else:
-            if pair_gcd(a[0], c[0]) != 1: raise ValueError("Inverse does not exist")
-            b.append(mod_inv(a[0], c[0]))
-        for i in range(1, n):
-            d = 0
-            for j in range(i):
-                d -= a[i-j]*b[j]
-            if d == 0: 
-                b.append(0)
-            elif c[i] == 0:
-                if d%a[0] != 0: raise ValueError("Inverse does not exist")
-                b.append(d//a[0])
-            else:
-                if d%pair_gcd(a[0], c[i]) != 0: raise ValueError("Inverse does not exist")
-                d = d//pair_gcd(a[0], c[i])
-                a1 = a[0]//pair_gcd(a[0], c[i])
-                c1 = c[i]//pair_gcd(a[0], c[i])
-                b.append(d*mod_inv(a1, c1))
-            # print(b)
-
-        # print(b)
-        b_poly = QuotientPolynomialRing(b, c)
-        unit = [0 for i in range(n)]; unit[0] = 1
-        # print(unit)
-        if QuotientPolynomialRing.Mul(poly, b_poly).element != unit:
-            raise ValueError("Inverse does not exist")
-
-        return b_poly
-        
-"""
-############################################################################################
-"""
-    def Mod(poly1: list[int], poly2: list[int], length)->list[int]:
-        el = poly1
-        coeff = 0
-
-        l = len(poly2)
-        for i in range(len(poly2)-1, -1, -1):
-            if poly2[i] != 0: 
-                coeff = poly2[i]
-                break
-            l -= 1
-
-        for i in range(len(el)):
-            el[i] *= coeff
-
-        while len(el) >= l:
-            order_diff = len(el) - l
-            m = el[len(el)-1]//coeff
-            for i in range(l):
-                el[i+order_diff] -= m*poly2[i]
-            el.pop()
-
-        # for i in range(len(el)):
-        #     if el[i]%coeff == 0: el[i] = el[i]//coeff
-        #     else: el[i] = el[i]/coeff
-
-        l = len(el)
-        for i in range(l, length):
-            el.append(0)
-            
-        return el
-
-    @staticmethod
-    def GCD_rec(poly1: Self, poly2: Self)->Self:
-        if poly1.pi_generator != poly2.pi_generator:
-            raise ValueError('Different pi_generators')
-        
-        if len(poly2.element) == 0: return poly1
-        if poly2.element == [0 for x in range(len(poly2.element))]: return poly1
-
-        mod = QuotientPolynomialRing.Mod(poly1.element, poly2.element, len(poly1.element))
-        mod_poly = QuotientPolynomialRing(mod, poly1.pi_generator)
-        return QuotientPolynomialRing.GCD(poly2, mod_poly)
-    
-    def GCD(poly1: Self, poly2: Self)->Self:
-        if poly1.pi_generator != poly2.pi_generator:
-            raise ValueError('Different pi_generators')
-        
-        gcd = QuotientPolynomialRing.GCD_rec(poly1, poly2).element
-
-        l = len(gcd)
-        if l == 0: return gcd
-        factor = 0
-        for x in gcd:
-            if x != 0:
-                factor = x
-                break
-        for x in gcd:
-            if x != 0: factor = pair_gcd(factor, x)
-
-        leading_coeff = 0
-        for i in range(len(gcd)-1, -1, -1):
-            if gcd[i] != 0: 
-                leading_coeff = gcd[i]
-                break
-
-        if leading_coeff < 0: factor *= -1
-        for i in range(len(gcd)):
-            gcd[i] = gcd[i]//factor
-
-        return QuotientPolynomialRing(gcd, poly1.pi_generator)
-        """
-#####################################################################################
 
 # print(QuotientPolynomialRing.Inv(QuotientPolynomialRing([1, 2, 1], [0, 3, 3, 1])).element)
 
-x = QuotientPolynomialRing([1, 3, 3, 1], [0, 1, 1])
-y = QuotientPolynomialRing([2, 4, 2], [0, 1, 1])
+# x = QuotientPolynomialRing([1, 3, 3, 1], [0, 1, 1])
+# y = QuotientPolynomialRing([2, 4, 2], [0, 1, 1])
 
 # print(QuotientPolynomialRing.Mod([3, 7, 5, 1], [0, 1, 1]))
 # print(QuotientPolynomialRing.Sub(x, y).element)
@@ -909,33 +953,42 @@ y = QuotientPolynomialRing([2, 4, 2], [0, 1, 1])
 # print(QuotientPolynomialRing.GCD(x, y).element)
 # print(QuotientPolynomialRing.Inv(QuotientPolynomialRing([0, 0, 1, 0], [7, 0, 0, 3, 1])).element)
 
-p1 = QuotientPolynomialRing([-3, -5, -1, 1], [7, 0, 0,  3, 1])
-p2 = QuotientPolynomialRing([1, 5, 7, 3], [7, 0, 0,  3, 1])
+# p1 = QuotientPolynomialRing([-3, -5, -1, 1], [7, 0, 0,  3, 1])
+# p2 = QuotientPolynomialRing([1, 5, 7, 3], [7, 0, 0,  3, 1])
 # print(QuotientPolynomialRing.GCD(p1, p2).element)
 # print(QuotientPolynomialRing.Mod([-3, -5, -1, 1], [1, 5, 7, 3], 4))
 
 
-def mod_base(p: list[int], r: int)->list[int]:
-        while len(p) >= r+1:
-            order_diff = len(p)-(r+1)
-            p[len(p)-r-1] += p[len(p)-1]
-            p.pop()
+def mod_base(p: list[int], r: int) -> list[int]:
+    """ Helper function for aks_test
+    
+    """
+    while len(p) >= r+1:
+        order_diff: int = len(p)-(r+1)
+        p[len(p)-r-1] += p[len(p)-1]
+        p.pop()
 
-        return p
+    return p
 
 def mul(p1: list[int], p2: list[int], r: int, n: int)->list[int]:
-        # print("a")
-        l1 = len(p1); l2 = len(p2)
-        # print((l1-1)+(l2-1)+1)
-        prod = [0 for i in range((l1-1)+(l2-1)+1)]
-        for i in range(l1):
-            for j in range(l2):
-                prod[i+j] += (p1[i]*p2[j])%n
-                prod[i+j] %= n
-        prod = mod_base(prod, r)
-        return prod
+    """ Helper function for aks_test
+    
+    """
+    # print("a")
+    l1: int = len(p1); l2: int = len(p2)
+    # print((l1-1)+(l2-1)+1)
+    prod: list[int] = [0 for i in range((l1-1)+(l2-1)+1)]
+    for i in range(l1):
+        for j in range(l2):
+            prod[i+j] += (p1[i]*p2[j])%n
+            prod[i+j] %= n
+    prod = mod_base(prod, r)
+    return prod
 
 def fast_exp(p,power,r, n):
+    """ Helper function for aks_test
+    
+    """
     # print(power)
     if power == 0: return [1]
     elif power%2 == 0:
@@ -944,14 +997,16 @@ def fast_exp(p,power,r, n):
         return mul(fast_exp(mul(p, p, r, n), (power-1)//2, r, n), p, r, n)
 
 
-def aks_satisfied(j, r, n):
+def aks_satisfied(j: int, r: int, n: int) -> bool:
+    """ Helper function for aks_test
+    """
     # print(1)
-    x = fast_exp([j, 1], n, r, n)
+    x: list[int] = fast_exp([j, 1], n, r, n)
     # print(2)
-    y = fast_exp([0, 1], n, r, n)
+    y: list[int] = fast_exp([0, 1], n, r, n)
     
-    l1 = len(x)
-    l2 = len(y)
+    l1: int = len(x)
+    l2: int = len(y)
 
     if l1 >= l2:
         for i in range(l2):
@@ -968,14 +1023,26 @@ def aks_satisfied(j, r, n):
 
 
 def aks_test(n: int)->bool:
+    """ Checks whether a number is prime or not.
+
+    Uses the deterministic, polynomial-time, AKS primality test.
+    
+    Args:
+        n: The integer to be tested
+
+    Returns:
+        bool: True if the number is a prime, False otherwise
+
+    If n is prime the algorithm may take an extremely long time    
+    """
     if is_perfect_power(n): return False
 
-    r = 2
+    r: int = 2
     while True:
         if pair_gcd(n, r) != 1: break
         else:
-            o = 1
-            pow_n = n
+            o: int = 1
+            pow_n: int = n
             while pow_n%r != 1:
                 pow_n*=n
                 o+=1
@@ -1043,17 +1110,17 @@ def discrete_log(x: int, g: int, p: int)->int:
     The baby step/giant step method is used in this function
     
     """
-    q = p-1
-    m = floor_sqrt(q)
-    values = {}
-    value = 1
+    q: int = p-1
+    m: int = floor_sqrt(q)
+    values: dict[int, int] = {}
+    value: int = 1
     for i in range(m+1):
         values[value] = i
         value *= g
         value %= p
     # print(values)
     value = x
-    mul = pow(g, q-m, p)
+    mul: int = pow(g, q-m, p)
     # print(mul)
     for i in range(m+1):
         # print(value)
@@ -1070,8 +1137,8 @@ def legendre_symbol(a: int, p: int)->int:
     """ Returns the Legendre symbol (a | p), where p is a prime
 
     Args:
-        a: an integer
-        p: a prime number
+        a: An integer
+        p: A prime number
 
     Returns:
         int: The Legendre symbol, (a | p)
@@ -1087,7 +1154,7 @@ def jacobi_symbol(a: int, n: int)->int:
     """ Returns the Jacobi symbol (a | n)
 
     Args:
-        a: an integer
+        a: An integer
         n: a positive integer
 
     Returns:
@@ -1095,7 +1162,7 @@ def jacobi_symbol(a: int, n: int)->int:
     
     """
     if pair_gcd(a, n) != 1: return 0
-    j = 1
+    j: int = 1
     factors = factor(n)
     # print(factors)
     for q, i in factors:
@@ -1108,32 +1175,34 @@ def modular_sqrt_prime(x: int, p: int)->int:
     """ Returns the modular square root of a number modulo a prime number
 
     Args:
-        x: the number 
-        p: the prime number, where square root is found in Z_p
+        x: The number 
+        p: The prime number, where square root is found in Z_p
 
     Returns:
-        int: modular square root of x modulo p
-    
+        int: Modular square root of x modulo p
+
+    Raises:
+        ValueError: Raised if the modular square root does not exist
     """
     if is_quadratic_residue_prime(x, p) != 1:
         raise ValueError("Modular square root does not exist")
     if p == 2: return 1
-    if p%4 == 3: 
-        p1 = pow(x, (p+1)//4, p)
+    if p%4 == 3:
+        p1: int = pow(x, (p+1)//4, p)
         if p1 > p-p1: return p-p1
         else: return p1
 
-    c = 2
+    c: int = 2
     while is_quadratic_residue_prime(c,p) != -1: c = random.randint(2, p-1)
 
-    h = 0
-    m = p-1
+    h: int = 0
+    m: int = p-1
     while m%2 == 0:
         m = m//2
         h += 1
     c = pow(c, m, p)
-    x1 = pow(x, m, p)
-    a = discrete_log(x1, c, p)
+    x1: int = pow(x, m, p)
+    a: int = discrete_log(x1, c, p)
     
     p1 = (pow(c, a//2, p)*pow(x, -(m//2), p))%p
     if p1 < p-p1: return p1
@@ -1141,24 +1210,53 @@ def modular_sqrt_prime(x: int, p: int)->int:
 
 
 def modular_sqrt_prime_power(x: int, p: int, e: int)->int: # assuming odd prime
+    """ Returns the modular square root of x modulo p^e
+
+    The least modular square root is returned
+
+    Args:
+        x: The number whose modular square root is to be found
+        p: The prime number
+        e: The power to which p is to be raised to get the modulus
+
+    Returns:
+        int: The least square root of x in the ring Z_(p^e)
+
+    Raises:
+        ValueError: Raised if the modular square root does not exist
+    
+    """
     if x%pow(p, e) == 0: return 0
     if is_quadratic_residue_prime_power(x, p, e) != 1:
         raise ValueError("Modular square root does not exist")
     
-    b = modular_sqrt_prime(x, p)
+    b: int = modular_sqrt_prime(x, p)
     for i in range(1, e):
-        a1 = mod_inv(2*b, p)
-        b1 = (x-b*b)//pow(p, i)
-        h = (a1*b1)%p
+        a1: int = mod_inv(2*b, p)
+        b1: int = (x-b*b)//pow(p, i)
+        h: int = (a1*b1)%p
         b = (b + h*pow(p, i))%pow(p, i+1)
-    p1 = b
+    p1: int = b
     if p1 > pow(p, e)-p1: return pow(p, e)-p1
     else: return p1
 
 
 def modular_sqrt_2_pow(x: int, e: int)->list[int]:
-    sqrts = []
-    num = pow(2, e)
+    """ Returns a list of all modular square roots of x modulo 2^e
+
+    Args:
+        x: The number whose square root is to be found
+        e: The power to which 2 is to be raised to get the modulus
+
+    Returns:
+        list[int]: A list of all the square roots in the ring Z_(2^e)
+
+    Raises:
+        ValueError: Raised if the modular square root does not exist
+    
+    """
+    sqrts: list[int] = []
+    num: int = pow(2, e)
     if x%2 == 0:
         for r in range(0, num, 2):
             if (r*r-x)%num == 0: sqrts.append(r)
@@ -1172,33 +1270,52 @@ def modular_sqrt_2_pow(x: int, e: int)->list[int]:
 # print(modular_sqrt_2_pow(68, 7))
 
 
-def modular_sqrt(x: int, z: int)->int:
-    y = z
-    pow_2 = 0
+def modular_sqrt(x: int, z: int) -> int:
+    """ Returns the modular square root of x modulo z
+
+    Args:
+        x: The number whose square root is to be found
+        z: The modulus of the ring in which modular square roots are to be found
+
+    Returns:
+        int: The least square root of x in the ring Z_z
+
+    Raises:
+        ValueError: Raised if the modular square root does not exist
+    
+    """
+    y: int = z
+    pow_2: int = 0
     while y%2 == 0:
         pow_2+=1
         y = y//2
 
-    factors = factor(y)
-    sq_roots = []
+    factors: list[tuple[int, int]] = factor(y)
+    sq_roots: list[int] = []
 
     for prime, power in factors:
-        sq_roots.append(modular_sqrt_prime_power(x%pow(prime, power), prime, power))
+        try:
+            sq_roots.append(modular_sqrt_prime_power(x%pow(prime, power), prime, power))
+        except:
+            raise ValueError("Modular square root does not exist")
 
     if pow_2 != 0:
         factors.append((2, pow_2))
-        sqrts_2 = modular_sqrt_2_pow(x, pow_2)
+        try:
+            sqrts_2: list[int] = modular_sqrt_2_pow(x, pow_2)
+        except:
+            raise ValueError("Modular square root does not exist")
         # print(sqrts_2)
 
-    n = [pow(prime, power) for prime, power in factors]
+    n: list[int] = [pow(prime, power) for prime, power in factors]
     
     # For listing all possibilities of sq. roots modulo prime-powers
     if len(sq_roots) != 0:
-        a_possible = [[sq_roots[0]], [-sq_roots[0]]] 
+        a_possible: list[list[int]] = [[sq_roots[0]], [-sq_roots[0]]] 
         for i in range(1, len(sq_roots)):
-            t = len(a_possible)
+            t: int = len(a_possible)
             for j in range(t):
-                a1 = a_possible[j][:]
+                a1: list[int] = a_possible[j][:]
                 a_possible[j].append(sq_roots[i])
                 a1.append(-sq_roots[i])
                 a_possible.append(a1)
@@ -1209,7 +1326,7 @@ def modular_sqrt(x: int, z: int)->int:
                 a1 = a_possible[i][:]
                 a_possible[i].append(sqrts_2[0])
                 for j in range(1, len(sqrts_2)):
-                    a2 = a1[:]
+                    a2: list[int] = a1[:]
                     a2.append(sqrts_2[j])
                     a_possible.append(a2)
         # print(a_possible)
@@ -1224,7 +1341,17 @@ def modular_sqrt(x: int, z: int)->int:
         return min(r%z for r in sqrts_2)
 
 
-def is_smooth(m: int, y: int)->bool:
+def is_smooth(m: int, y: int) -> bool:
+    """ Checks whether m is y-smooth or not
+
+    Args:
+        m: the number to be checked
+        y: the number with respect to which smoothness is to be checked
+
+    Returns:
+        bool: True if m is y-smooth, False otherwise
+    
+    """
     for i in range(2, y+1)  :
         if m%i == 0:
             while m%i == 0:
@@ -1233,73 +1360,95 @@ def is_smooth(m: int, y: int)->bool:
     return False
 
 
-def gaussian_elimination_modulo_p(A: list[list[int]], p: int)->list[list[int]]:
+def gaussian_elimination_modulo_p(A: list[list[int]], p: int) -> list[list[int]]:
+    """ Performs gaussian elimination in the ring Z_p, where p is a prime number
+
+    Used to implement the linear algebra in the function prob_find_factor
+
+    Args:
+        A: the matrix on which gaussian elimination is to be performed
+        p: the prime which forms the ring Z_p
+
+    Returns:
+        list[list[int]]: The matrix after the operation
+
+
+    A is m*n, each element of A is a row
+    m = no. of rows, n = no. of columns
+    A[i-1] is ith row, A[:][j-1] is jth column
     """
-        A is m*n, each element of A is a row
-        m = no. of rows, n = no. of columns
-        A[i-1] is ith row, A[:][j-1] is jth column
-    """
-    B = [[A[i][j] for j in range(len(A[i]))] 
+    B: list[list[int]] = [[A[i][j] for j in range(len(A[i]))] 
                 for i in range(len(A))]
-    r = 0
-    m = len(A)
-    n = len(A[0])
+    r: int = 0
+    m: int = len(A)
+    n: int = len(A[0])
     for j in range(1, n+1):
-        l = 0
-        i = r
+        l: int = 0
+        i: int = r
         while l == 0 and i < m:
             i += 1
             # print(i)
             if B[i-1][j-1]%p != 0: l = i
         if l != 0:
             r = r+1
-            swap = B[r-1][:]
+            swap: list[int] = B[r-1][:]
             B[r-1] = B[l-1][:]
             B[l-1] = swap[:]
-            b = mod_inv(B[r-1][j-1], p)
+            b: int = mod_inv(B[r-1][j-1], p)
             for iter in range(len(B[r-1])): 
                 B[r-1][iter] *= b
                 B[r-1][iter] %= p
             for i in range(1, m+1):
                 if i != r:
-                    b = B[i-1][j-1]
+                    b1: int = B[i-1][j-1]
                     for iter in range(len(B[i-1])): 
-                        B[i-1][iter] -= b*B[r-1][iter]
+                        B[i-1][iter] -= b1*B[r-1][iter]
                         B[i-1][iter] %= p            
 
     return B
 
 def prob_find_factor(n: int)->int:
-    y = pow(2, floor_sqrt((len(bin(n)[2:])*len(bin(len(bin(n)[2:]))[2:]))//2))
-    primes = []
+    """ Returns a random non-trivial (i.e., not 1 or n) factor of the number n
+
+    Args:
+        n: The number whose factor is to be found
+
+    Returns:
+        int: A non-trivial factor of the number
+
+    A subexponential factoring algorithm is implemented in this function
+    
+    """
+    y: int = pow(2, floor_sqrt((len(bin(n)[2:])*len(bin(len(bin(n)[2:]))[2:]))//2))
+    primes: list[int] = []
     for i in range(2, y+1):
         if is_prime(i): primes.append(i)
-    k = len(primes)
+    k: int = len(primes)
     # print(y, primes, k)
 
-    v = []
-    a = []
+    v: list[list[int]] = []
+    a: list[int] = []
 
-    d = random.randint(1, n-1)
+    d: int = random.randint(1, n-1)
     while pair_gcd(d, n) != 1: d = random.randint(1, n-1)
     # print(d)
 
-    counter_lim = 10000 # I am getting lucky with this limit, I need it to prevent an infinite loop
+    counter_lim: int = 10000 # I am getting lucky with this limit, I need it to prevent an infinite loop
 
     i = 0
     while True:
         i = i+1
         # print(i)
-        counter = 0
+        counter: int = 0
         while counter < counter_lim:
             counter+=1
-            a_i = random.randint(1, n-1)
+            a_i: int = random.randint(1, n-1)
             while pair_gcd(a_i, n) != 1: a_i = random.randint(1, n-1)
-            m_i = (a_i*a_i*d)%n
+            m_i: int = (a_i*a_i*d)%n
             # print(a_i, m_i)
-            e_i = [0 for iter in range(k)]
+            e_i: list[int] = [0 for iter in range(k)]
             for iter in range(k):
-                pow_p_i = 0
+                pow_p_i: int = 0
                 while m_i%primes[iter] == 0:
                     m_i = m_i//primes[iter]
                     pow_p_i += 1
@@ -1320,15 +1469,15 @@ def prob_find_factor(n: int)->int:
 
     # print(len(v), len(v[0]))
 
-    A = [[v[i][j] for i in range(k+2)] for j in range(k+1)]
-    G = gaussian_elimination_modulo_p(A, 2)
+    A: list[list[int]] = [[v[i][j] for i in range(k+2)] for j in range(k+1)]
+    G: list[list[int]] = gaussian_elimination_modulo_p(A, 2)
 
     # print(G)
 
-    zeroes = [0 for i in range(len(A[0]))]
-    not_possible = zeroes[:]; not_possible[k] = 1
+    zeroes: list[int] = [0 for i in range(len(A[0]))]
+    not_possible: list[int] = zeroes[:]; not_possible[k] = 1
 
-    c = []
+    c: list[int] = []
     for Gi in G:
         if Gi == not_possible:
             # print("nooooooooooooo2")
@@ -1344,34 +1493,34 @@ def prob_find_factor(n: int)->int:
     c.append(1)
     # print(c)
 
-    alpha = 1
+    alpha: int = 1
 
     for i in range(k+2):
         alpha *= pow(a[i], c[i])
     # print(alpha, d)
 
-    e = [0 for i in range(k+1)]
+    e: list[int] = [0 for i in range(k+1)]
     for i in range(k+1):
         for j in range(k+2):
             e[i] += c[j]*v[j][i]
 
     # print(e)
 
-    beta = 1
+    beta: int = 1
     for i in range(k):
         beta *= pow(primes[i], e[i]//2)
     # beta //= pow(d, e[k]//2)
 
     # print(alpha, beta)
 
-    gamma = (alpha//beta)*pow(d, e[k]//2)
+    gamma: int = (alpha//beta)*pow(d, e[k]//2)
 
     # print(gamma)
     if gamma%n == 1 or gamma%n == -1:
         # print("noooooooooooooooo4")
         return prob_find_factor(n)
     
-    factor = pair_gcd((gamma-1)%n, n)
+    factor: int = pair_gcd((gamma-1)%n, n)
     if factor == 1: 
         # print("noooooooooooooooooooo5")
         return prob_find_factor(n)
@@ -1379,10 +1528,22 @@ def prob_find_factor(n: int)->int:
 
 # print(prob_find_factor(1408198281))
 
-def probabilistic_factor(n: int)->list[tuple[int, int]]:
-    factors = []
+def probabilistic_factor(n: int) -> list[tuple[int, int]]:
+    """ Returns the prime factorisation of n.
+
+    Args:
+        n: A positive integer.
+
+    Returns:
+        list[tuple[int, int]]: The prime factorisation of n
+            Each tuple in the list is of the form (p, e),
+                where p is a prime which divides n and e is the exponent of p in n.
+            The list is sorted in ascending order of the first element of each tuple.
+    
+    """
+    factors: list[tuple[int, int]] = []
     # to ensure that n is odd
-    pow_2 = 0
+    pow_2: int = 0
     while n%2 == 0:
         pow_2 += 1
         n = n//2
@@ -1395,8 +1556,8 @@ def probabilistic_factor(n: int)->list[tuple[int, int]]:
         return factors
     
     # to ensure that n is not of the form p^e for some prime p
-    length = len(bin(n)[2:])
-    pow_range = length-1
+    length: int = len(bin(n)[2:])
+    pow_range: int = length-1
     for p in range(2, pow_range+1):
         k: int = (length-1)//p
         root: int = 1<<k
@@ -1410,9 +1571,9 @@ def probabilistic_factor(n: int)->list[tuple[int, int]]:
             return factors
         
     # To ensure that n is not y-smooth    
-    y = pow(2, floor_sqrt((len(bin(n)[2:])*len(bin(len(bin(n)[2:]))[2:]))//2))
+    y: int = pow(2, floor_sqrt((len(bin(n)[2:])*len(bin(len(bin(n)[2:]))[2:]))//2))
     for i in range(2, y+1):
-        pow_i = 0
+        pow_i: int = 0
         while n%i == 0:
             pow_i += 1
             n = n//i
@@ -1425,24 +1586,24 @@ def probabilistic_factor(n: int)->list[tuple[int, int]]:
         factors.append((n, 1))
         return factors
     
-    d = prob_find_factor(n)
+    d: int = prob_find_factor(n)
     # print(d, n//d)
-    n_factorization = dict(probabilistic_factor(n//d))
-    new_factors = dict(probabilistic_factor(d))
+    n_factorization: dict[int, int] = dict(probabilistic_factor(n//d))
+    new_factors: dict[int, int] = dict(probabilistic_factor(d))
     for prime in new_factors:
         if prime in n_factorization:
             n_factorization[prime] += new_factors[prime]
         else:
             n_factorization[prime] = new_factors[prime]
 
-    dict_factors = dict(factors)
+    dict_factors: dict[int, int] = dict(factors)
     for prime in n_factorization:
         if prime in dict_factors:
             dict_factors[prime] += n_factorization[prime]
         else:
             dict_factors[prime] = n_factorization[prime]
 
-    factors_final = []
+    factors_final: list[tuple[int, int]] = []
     for prime in sorted(dict_factors):
         factors_final.append((prime, dict_factors[prime]))
 
